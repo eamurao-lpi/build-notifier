@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3.17
+        uses: actions/checkout@v4
       - name: cdk deploy
         uses: arnaskro/aws-cdk-v2-github-actions@v2.3.0
         with:
