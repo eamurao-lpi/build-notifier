@@ -6,15 +6,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: cdk deploy
-        uses: youyo/aws-cdk-github-actions@master
+#      - name: cdk deploy
+#        uses: youyo/aws-cdk-github-actions@master
+#        with:
+#          cdk_subcommand: 'deploy'
+#          cdk_stack: 'CdkStack-Test-Ed'
+#          cdk_args: '--require-approval never'
+#          actions_comment: false,
+#          working_dir: 'cdk-notif'
+#        env:
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      - name: Deploy
+        uses: udondan/cdk-nodejs@v0.4.0
         with:
-          cdk_subcommand: 'deploy'
-          cdk_stack: 'CdkStack-Test-Ed'
-          cdk_args: '--require-approval never'
-          actions_comment: false,
-          working_dir: 'cdk-notif'
-        env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
