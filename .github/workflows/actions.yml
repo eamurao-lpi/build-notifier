@@ -16,7 +16,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: Github_Workspace
-        run: echo ${GITHUB_WORKSPACE}
+        run: echo ${GITHUB_WORKSPACE} 
+      - name: Test List
+        run: ls
       - name: Install dependecies
         run: yarn
       - name: Synth stack
