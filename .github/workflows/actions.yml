@@ -22,9 +22,9 @@ jobs:
       - name: Install dependecies
         run: yarn
       - name: Synth stack
-        run: yarn cdk synth
+        run: cd cdk-notif && yarn cdk synth
       - name: Deploy stack
-        run: yarn cdk deploy --all --require-approval never
+        run: cd cdk-notif && yarn cdk deploy --all --require-approval never
 
       
 #      - name: cdk deploy
