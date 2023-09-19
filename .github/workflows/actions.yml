@@ -10,7 +10,9 @@ jobs:
         with:
           node-version: "14"
       - name: Install CDK
-        run: npm install -g aws-cdk
+        run: |
+          npm install -g aws-cdk
+          npm install -g typescript
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
