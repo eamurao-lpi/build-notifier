@@ -9,7 +9,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: "14"
-      - name: Install CDK and Typescript
+      - name: Install CDK, Typescript and Ts-Node
         run: |
           npm install -g aws-cdk
           npm install -g typescript
