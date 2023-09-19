@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3.17
 #      - name: Deploy                       
 #        uses: docker://kikemnzz/automate-cdk-github-action-kmzz:v1.1.3
 #        env:
