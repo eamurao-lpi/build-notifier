@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: cdk deploy
-        uses: P47Phoenix/dotnet-cdk-action@latest
+        uses: P47Phoenix/dotnet-cdk-action@v1.0.12
         with:
           cdk_subcommand: 'deploy'
           cdk_stack: 'stack1'
