@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: cdk deploy
-        uses: youyo/aws-cdk-github-actions@v2
+        uses: youyo/aws-cdk-github-actions@master
         with:
           cdk_subcommand: 'deploy'
           cdk_stack: 'CdkStack-Test-Ed'
