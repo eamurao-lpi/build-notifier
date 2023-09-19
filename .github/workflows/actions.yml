@@ -7,7 +7,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Deploy
-        uses: docker://kikemnzz/automate-cdk-github-action-kmzz:v1.0.0
+        uses: KikeMendez/automate-cdk-github-action-kmzz:v1.0.0@master
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
