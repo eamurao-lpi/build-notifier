@@ -2,36 +2,57 @@ on: [push]
 
 jobs:
   aws_cdk:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "16"
-      - name: Install CDK, Typescript and Ts-Node
-        run: |        
-          npm install -g typescript
-          npm install -g ts-node
-          npm install -g aws-cdk
+      - name: 
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-      - name: Github_Workspace
-        run: echo ${GITHUB_WORKSPACE} 
-      - name: Test List
-        run: ls
-      - name: Install dependecies
+          role-to-assume: arn:aws:iam::861267531349:role/github-role
+          role-session-name: sampelrolesession
+      - name: Install NPM
+        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+      - name: Node Version
+        run: node -v
+      - name: Npm Version
+        run: npm -v
+      - name: Install project dependecies
         run: cd cdk-notif && npm i
-#        run: yarn
-      - name: Synth stack
+      - name: CDK Synth
         run: cd cdk-notif && cdk synth
-        # run: cd cdk-notif && yarn cdk synth
-      - name: Deploy stack
-        run: cd cdk-notif && yarn cdk deploy --all --require-approval never
+
+
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: "16"
+#      - name: Install CDK, Typescript and Ts-Node
+#        run: |        
+#          npm install -g typescript
+#          npm install -g ts-node
+#          npm install -g aws-cdk
+#      - name: Configure aws credentials
+#        uses: aws-actions/configure-aws-credentials@master
+#        with:
+#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+#          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+#      - name: Github_Workspace
+#        run: echo ${GITHUB_WORKSPACE} 
+#      - name: Test List
+#        run: ls
+#      - name: Install dependecies
+#        run: cd cdk-notif && npm i
+##        run: yarn
+#      - name: Synth stack
+#        run: cd cdk-notif && cdk synth
+#        # run: cd cdk-notif && yarn cdk synth
+#      - name: Deploy stack
+#        run: cd cdk-notif && yarn cdk deploy --all --require-approval never
 
       
 #      - name: cdk deploy
