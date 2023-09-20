@@ -26,8 +26,8 @@ jobs:
         run: npm -v
       - name: Install project dependecies
         run: cd cdk-notif && npm i
-      - name: CDK Synth
-        run: cd cdk-notif && cdk synth
+      #- name: CDK Synth
+      #  run: cd cdk-notif && cdk synth
       - name: CDK Deploy
         run: cd cdk-notif && cdk deploy --require-approval never
 
