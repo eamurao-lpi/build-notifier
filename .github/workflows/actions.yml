@@ -16,6 +16,8 @@ jobs:
           #role-session-name: sampelrolesession
       - name: Install NPM
         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+      - name: Install Esbuild
+        run: 'npm i -g esbuild'
       - name: Install AWS CDK
         run: 'sudo npm install -g aws-cdk' 
       - name: Node Version
@@ -25,9 +27,9 @@ jobs:
       - name: Install project dependecies
         run: cd cdk-notif && npm i
       - name: CDK Synth
-        run: cd cdk-notif && npm run cdk synth -v
+        run: cd cdk-notif && cdk synth
       - name: CDK Deploy
-        run: cd cdk-notif && npm run cdk deploy -v --all --require-approval never
+        run: cd cdk-notif && cdk deploy --require-approval never
 
 #      - uses: actions/setup-node@v3
 #        with:
