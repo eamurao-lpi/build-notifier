@@ -25,7 +25,8 @@ jobs:
       - name: Test List
         run: ls
       - name: Install dependecies
-        run: yarn
+        run: cd cdk-notif && npm i
+#        run: yarn
       - name: Synth stack
         run: cd cdk-notif && yarn cdk synth
       - name: Deploy stack
