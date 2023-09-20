@@ -25,7 +25,7 @@ jobs:
       - name: Install project dependecies
         run: cd cdk-notif && npm i
       - name: CDK Synth
-        run: cd cdk-notif && cdk synth
+        run: cd cdk-notif && npm run cdk synth -v -o
 
 
 #      - uses: actions/setup-node@v3
