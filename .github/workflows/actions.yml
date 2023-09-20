@@ -26,7 +26,8 @@ jobs:
         run: cd cdk-notif && npm i
       - name: CDK Synth
         run: cd cdk-notif && npm run cdk synth -v -o
-
+      - name: CDK Deploy
+        run: cd cdk-notif && npm cdk deploy --all --require-approval never
 
 #      - uses: actions/setup-node@v3
 #        with:
