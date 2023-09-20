@@ -28,7 +28,8 @@ jobs:
         run: cd cdk-notif && npm i
 #        run: yarn
       - name: Synth stack
-        run: cd cdk-notif && yarn cdk synth
+        run: cd cdk-notif && cdk synth
+        # run: cd cdk-notif && yarn cdk synth
       - name: Deploy stack
         run: cd cdk-notif && yarn cdk deploy --all --require-approval never
 
