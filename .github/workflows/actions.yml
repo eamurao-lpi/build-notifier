@@ -16,8 +16,8 @@ jobs:
           #role-session-name: sampelrolesession
       - name: Install NPM
         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
-      - name: Install Esbuild
-        run: 'npm i -g esbuild'
+      #- name: Install Esbuild
+      #  run: 'npm i -g esbuild'
       - name: Install AWS CDK
         run: 'sudo npm install -g aws-cdk' 
       - name: Node Version
