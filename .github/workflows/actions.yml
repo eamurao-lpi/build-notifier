@@ -13,7 +13,7 @@ jobs:
       - name: Dotnet Restore
         run: dotnet restore
       - name: Dotnet publish
-        run: dotnet publish SP-UI-GChat-Notif.sln -c Release
+        run: dotnet publish -c Release -p:PublishReadyToRun=false
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
