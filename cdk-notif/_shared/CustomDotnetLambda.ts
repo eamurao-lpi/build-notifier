@@ -1,6 +1,7 @@
-import { DotNetFunction, DotNetFunctionProps } from "@xaaskit-cdk/aws-lambda-dotnet";
+// import { DotNetFunction, DotNetFunctionProps } from "@xaaskit-cdk/aws-lambda-dotnet";
 import { CfnOutput, aws_iam } from "aws-cdk-lib";
 import { IResource, LambdaIntegration, RestApi } from "aws-cdk-lib/aws-apigateway";
+import { Function, FunctionProps } from "aws-cdk-lib/aws-lambda";
 import { Construct } from "constructs";
 import { urlCombiner } from "./StringUtils";
 import { HttpMethod } from "aws-cdk-lib/aws-events";
@@ -13,7 +14,7 @@ export interface ApiProps {
 };
 
 export interface CustomDotnetLambdaProps{
-    dotNetFunctionProps: DotNetFunctionProps;
+    dotNetFunctionProps: FunctionProps;
     api?: ApiProps;
     awsManagedPolicyNames? : string[];
 }
@@ -21,13 +22,13 @@ export interface CustomDotnetLambdaProps{
 export class CustomDotnetLambda {
 
     name: string;
-    lambda: DotNetFunction;
+    lambda: Function;
     lambdaIntegration?: LambdaIntegration;
 
     constructor(scope: Construct, id: string, props: CustomDotnetLambdaProps) {
 
         this.name = id + "LambdaFunction";
-        this.lambda = new DotNetFunction(scope, this.name, props.dotNetFunctionProps)
+        this.lambda = new Function(scope, this.name, props.dotNetFunctionProps)
         
 
         if(props.api != undefined){

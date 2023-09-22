@@ -6,6 +6,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
+      - name: Dotnet Restore
+        run: dotnet restore
+      - name: Dotnet publish
+        run: dotnet publish SP-UI.GChat-Notif.sln -c Release
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -16,8 +24,6 @@ jobs:
           #role-session-name: sampelrolesession
       - name: Install NPM
         run: 'sudo apt update -y && sudo apt install nodejs npm -y'
-      #- name: Install Esbuild
-      #  run: 'npm i -g esbuild'
       - name: Install AWS CDK
         run: 'sudo npm install -g aws-cdk' 
       - name: Node Version

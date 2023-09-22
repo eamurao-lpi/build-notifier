@@ -17,7 +17,8 @@ export class CdkNotifierStack extends cdk.Stack {
         dotNetFunctionProps: {
           runtime: Runtime.DOTNET_6,
           functionName: `${id}-Lambda-SpUi-Build-Notifier`,
-          projectDir: "../SP-UI-GChat-Notif/",
+          code: cdk.aws_lambda.Code.fromAsset('../SP-UI-GChat-Notif/bin/Release/net6.0/publish'),
+          // projectDir: "../SP-UI-GChat-Notif/",
           handler: "SP-UI-GChat-Notif::SP_UI_GChat_Notif.Function::FunctionHandler",
           description: "Build notifier for sp ui",
           timeout: defaultTimeOut,
