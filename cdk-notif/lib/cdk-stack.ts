@@ -28,6 +28,8 @@ export class CdkNotifierStack extends cdk.Stack {
           }
         }
       });
+
+      
     // The code that defines your stack goes here
 
     // example resource
