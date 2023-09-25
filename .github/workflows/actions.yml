@@ -10,7 +10,8 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-        
+      - name: Get Repository Name
+        run: echo "${{ github.repository.name }}"
       # - name: Setup .Net Core
       #   uses: actions/setup-dotnet@v3
       #   with:
