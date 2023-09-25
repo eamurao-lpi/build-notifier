@@ -6,56 +6,59 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Check Repo
-        run: echo "Current Repository ${{ github.repository }}"
-      - name: Setup .Net Core
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '6.0.x'
-      - name: Dotnet Restore
-        run: dotnet restore
-      - name: Dotnet publish
-        run: dotnet publish -c Release -p:PublishReadyToRun=false
-      - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@master
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
-          #role-to-assume: arn:aws:iam::861267531349:role/github-role
-          #role-session-name: sampelrolesession
-      - name: Install NPM
-        run: 'sudo apt update -y && sudo apt install nodejs npm -y'
-      - name: Install AWS CDK
-        run: 'sudo npm install -g aws-cdk' 
-      - name: Node Version
-        run: node -v
-      - name: Npm Version
-        run: npm -v
-      - name: Install project dependecies
-        run: cd cdk-notif && npm i
-      #- name: CDK Synth
-      #  run: cd cdk-notif && cdk synth
-      - name: CDK Deploy
-        run: cd cdk-notif && cdk deploy --require-approval never
-      - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
-        with:
-          name: Build
-          url: '${{ secrets.HOST_GOOGLE_WEBHOOK }}'
-          status: ${{ job.status }}
-        if: always()
+      - name: Dump github context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+        
+      # - name: Setup .Net Core
+      #   uses: actions/setup-dotnet@v3
+      #   with:
+      #     dotnet-version: '6.0.x'
+  #     - name: Dotnet Restore
+  #       run: dotnet restore
+  #     - name: Dotnet publish
+  #       run: dotnet publish -c Release -p:PublishReadyToRun=false
+  #     - name: Configure aws credentials
+  #       uses: aws-actions/configure-aws-credentials@master
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+  #         #role-to-assume: arn:aws:iam::861267531349:role/github-role
+  #         #role-session-name: sampelrolesession
+  #     - name: Install NPM
+  #       run: 'sudo apt update -y && sudo apt install nodejs npm -y'
+  #     - name: Install AWS CDK
+  #       run: 'sudo npm install -g aws-cdk' 
+  #     - name: Node Version
+  #       run: node -v
+  #     - name: Npm Version
+  #       run: npm -v
+  #     - name: Install project dependecies
+  #       run: cd cdk-notif && npm i
+  #     #- name: CDK Synth
+  #     #  run: cd cdk-notif && cdk synth
+  #     - name: CDK Deploy
+  #       run: cd cdk-notif && cdk deploy --require-approval never
+  #     - name: Google Chat Notification
+  #       uses: Co-qn/google-chat-notification@releases/v1
+  #       with:
+  #         name: Build
+  #         url: '${{ secrets.HOST_GOOGLE_WEBHOOK }}'
+  #         status: ${{ job.status }}
+  #       if: always()
 
-  automated-api-tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Postman CLI
-        run: |
-          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
-      - name: Login to Postman CLI
-        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
-      - name: Run API tests
-        run: |
-          postman collection run "8465953-a4f7f54f-3c82-4f57-ae39-e0c88e27a65c"
+  # automated-api-tests:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - name: Install Postman CLI
+  #       run: |
+  #         curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+  #     - name: Login to Postman CLI
+  #       run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+  #     - name: Run API tests
+  #       run: |
+  #         postman collection run "8465953-a4f7f54f-3c82-4f57-ae39-e0c88e27a65c"
