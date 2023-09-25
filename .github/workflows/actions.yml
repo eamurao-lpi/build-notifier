@@ -14,10 +14,6 @@ jobs:
         run: dotnet restore
       - name: Dotnet publish
         run: dotnet publish -c Release -p:PublishReadyToRun=false
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -49,7 +45,7 @@ jobs:
         if: always()
 
   automated-api-tests:
-    needs: deploy
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
