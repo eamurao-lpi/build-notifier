@@ -1,7 +1,7 @@
 on: [push]
 
 jobs:
-  aws_cdk:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -14,6 +14,10 @@ jobs:
         run: dotnet restore
       - name: Dotnet publish
         run: dotnet publish -c Release -p:PublishReadyToRun=false
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@master
         with:
@@ -40,11 +44,12 @@ jobs:
         uses: Co-qn/google-chat-notification@releases/v1
         with:
           name: Build
-          url: 'https://chat.googleapis.com/v1/spaces/AAAAMHZG3CY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=pkXs2RzQahn8PK5fxJ7Y3_Pg1xMuy-W1MehJSSpmqxs'
+          url: '${{ secrets.HOST_GOOGLE_WEBHOOK }}'
           status: ${{ job.status }}
         if: always()
+
   automated-api-tests:
-    needs: aws_cdk
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -56,10 +61,3 @@ jobs:
       - name: Run API tests
         run: |
           postman collection run "8465953-a4f7f54f-3c82-4f57-ae39-e0c88e27a65c"
-      - name: Google Chat Notification
-        uses: Co-qn/google-chat-notification@releases/v1
-        with:
-          name: Build
-          url: 'https://chat.googleapis.com/v1/spaces/AAAAMHZG3CY/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=pkXs2RzQahn8PK5fxJ7Y3_Pg1xMuy-W1MehJSSpmqxs'
-          status: ${{ job.status }}
-        if: always()
