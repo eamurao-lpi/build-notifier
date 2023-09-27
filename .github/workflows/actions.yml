@@ -4,7 +4,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Test
         uses: actions/checkout@v3
       - name: Dump github context
         env:
