@@ -1,22 +1,22 @@
 on: 
   pull_request:
     branches:
-      - deploy
+      - dev
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout Test
         uses: actions/checkout@v3
       - name: Dump github context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      # - name: Setup .Net Core
-      #   uses: actions/setup-dotnet@v3
-      #   with:
-      #     dotnet-version: '6.0.x'
+      - name: Setup .Net Core
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '6.0.x'
   #     - name: Dotnet Restore
   #       run: dotnet restore
   #     - name: Dotnet publish
