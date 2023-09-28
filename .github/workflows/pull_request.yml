@@ -1,0 +1,73 @@
+on:
+    pull_request:
+        branches:
+            - dev
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Dump github context
+              env:
+                GITHUB_CONTEXT: ${{ toJson(github) }}
+              run: echo "$GITHUB_CONTEXT"
+        
+    # steps:
+    #     - name: Github Pull Request
+    #       run: |
+    #         curl --location --request POST '${{ secrets.HOST_GOOGLE_WEBHOOK }}' \
+    #         --header 'Content-Type: application/json' \
+    #         --data-raw '{
+    #           "cards": [
+    #               {
+    #                   "header": {
+    #                       "title": "Pull Request",
+    #                       "subtitle": "Issue No: #${{ github.event.issue.number }}"
+    #                   },
+    #                   "sections": [
+    #                       {
+    #                           "widgets": [
+    #                               {
+    #                                  "keyValue": {
+    #                                       "topLabel": "Creator",
+    #                                       "content": "${{ github.event.issue.user.login }}"
+    #                                   },
+    #                                },
+    #                                {
+    #                                  "keyValue": {
+    #                                       "topLabel": "Title",
+    #                                       "content": "${{ github.event.issue.title }}"
+    #                                   }
+    #                                },
+    #                                {
+    #                                  "keyValue": {
+    #                                       "topLabel": "Assigned Lables",
+    #                                       "content": "- ${{ join(github.event.issue.labels.*.name) }}"
+    #                                   }
+    #                                },
+    #                                {
+    #                                  "keyValue": {
+    #                                       "topLabel": "Assignees",
+    #                                       "content": "- ${{ join(github.event.issue.assignees.*.login) }}"
+    #                                   }
+    #                                },
+    #                                {
+    #                                   "buttons": [
+    #                                       {
+    #                                           "textButton": {
+    #                                               "text": "OPEN ISSUE",
+    #                                               "onClick": {
+    #                                                   "openLink": {
+    #                                                       "url": "${{ github.event.issue.html_url }}"
+    #                                                   }
+    #                                               }
+    #                                           }
+    #                                       }
+    #                                   ]
+    #                               }
+    #                           ]
+    #                       }
+    #                   ]
+    #               }
+    #           ]
+    #       }'
