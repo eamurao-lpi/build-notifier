@@ -1,0 +1,61 @@
+on:
+    pull_request:
+        types:
+          - opened
+        branches:
+            - dev
+jobs:
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Dump github context
+              env:
+                GITHUB_CONTEXT: ${{ toJson(github.event) }}
+              run: echo "$GITHUB_CONTEXT"
+        
+            - name: Github Pull Request
+              run: |
+                curl --location --request POST '${{ secrets.HOST_GOOGLE_WEBHOOK }}' \
+                --header 'Content-Type: application/json' \
+                --data-raw '{
+                "cards": [
+                    {
+                        "header": {
+                            "title": "Pull Request",
+                            "subtitle": "Issue No: #${{ github.event.pull_request.number }}"
+                        },
+                        "sections": [
+                            {
+                                "widgets": [
+                                    {
+                                        "keyValue": {
+                                            "topLabel": "Creator",
+                                            "content": "${{ github.event.pull_request.user.login }}"
+                                        },
+                                    },
+                                    {
+                                        "keyValue": {
+                                            "topLabel": "Title",
+                                            "content": "${{ github.event.pull_request.title }}"
+                                        }
+                                    },
+                                    {
+                                        "buttons": [
+                                            {
+                                                "textButton": {
+                                                    "text": "OPEN ISSUE",
+                                                    "onClick": {
+                                                        "openLink": {
+                                                            "url": "${{ github.event.pull_request.html_url }}"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]}'
